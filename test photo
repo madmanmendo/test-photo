@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Upload Add-in</title>
+</head>
+<body>
+    <form id="photoUploadForm" enctype="multipart/form-data">
+        <label for="assetPhoto">Upload Photo:</label>
+        <input type="file" id="assetPhoto" name="assetPhoto" accept="image/*">
+        <button type="submit">Upload</button>
+    </form>
+
+    <script>
+        document.getElementById('photoUploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                // You can add code here to handle the response, e.g., displaying the uploaded photo
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
